@@ -1,0 +1,37 @@
+<ion-view view-title="{{ticker}}" drag-content="false">
+    <ion-nav-bar id="stock-navbar" class="bar-dark ng-style:reactiveColor">
+        <ion-nav-back-button></ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-nav-buttons side="right">
+        <button class="button icon-left ng-style:reactiveColor" ng-class="following ? 'ion-ios-checkmark-empty' : 'ion-ios-plus'" 
+                        ng-bind="following? 'Following' : 'Follow'" ng-click="toggleFollow()">
+        </button>
+    </ion-nav-buttons>
+    <div class="bar bar-subheader bar-light" id="stock-subheader-bar">
+        <div class="buttons" side="left">
+            <div class="button button-clear display-flex">
+                <h6 id="stock-name"></h6>
+            </div>
+        </div>
+        <h2 class="title button-left button-right" id="stock-price">
+            
+        </h2>
+        <div class="buttons" side="right">
+            <div class="button button-clear">
+                <h6>
+                    
+                </h6>
+            </div>
+        </div>
+    </div>
+    
+    <ion-content class="has-subheader" scrollbar-y="false">
+        <div class="button-bar" id="short-button-bar">
+            <a ng-click="chartViewFunc(1)" ng-class="chartView == 1 ? 'active' : ''" class="button">Day</a>
+            <a ng-click="chartViewFunc(2)" ng-class="chartView == 2 ? 'active' : ''" class="button">Week</a>
+            <a ng-click="chartViewFunc(3)" ng-class="chartView == 3 ? 'active' : ''" class="button">3m</a>
+            <a ng-click="chartViewFunc(4)" ng-class="chartView == 4 ? 'active' : ''" class="button">Year</a>
+            <a ng-click="chartViewFunc(5)" ng-class="chartView == 5 ? 'active' : ''" class="button">Max</a>
+        </div>
+    </ion-content>
+</ion-view>
