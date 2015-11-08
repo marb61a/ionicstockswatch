@@ -9,3 +9,7 @@ angular.module('stockMarketApp.controllers', [])
       function($scope, myStocksArrayService){
         $scope.myStockArray = myStocksArrayService;
       }])     
+.contoller('StockCtrl', ['$scope', '$stateParams', '$window', '$ionicPopup', 'followStockService', 'stockDataServce', 'dateService', 'chartDataService', 'notesService', 'newsService',
+      function($scope, $stateParams, $window, $ionicPopup, followStockService, stockDataServce, dateService, chartDataService, notesService, newsService){
+  
+      }])

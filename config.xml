@@ -2,9 +2,9 @@
 <widget id="com.ionicframework.stockwatch500820" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>stockwatch</name>
   <description>
-        An Ionic Framework and Cordova project.
+        A stock market app made with Ionic.
     </description>
-  <author email="hi@ionicframework" href="http://ionicframework.com/">
+  <author email="marb61a@gmail.com" href="http://marb61a.com/">
       Ionic Framework Team
     </author>
   <content src="index.html"/>
