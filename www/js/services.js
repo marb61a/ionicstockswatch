@@ -71,3 +71,19 @@ angular.module('stockMarketApp.services', [])
   };
 
 })
+
+.factory('chartDataCacheService', function(CacheFactory){
+  var chartDataCache;
+  
+  if(!CacheFactory.get('chartDataCache')){
+    chartDataCache = CacheFactory('chartDataCache', {
+      maxAge: 60 * 60 * 8 * 1000,
+      deleteOnExpire: 'aggressive',
+      storageMode: 'localStorage'
+    });
+  } else{
+    chartDataCache = CacheFactory.get('chartDataCache');
+  }
+  
+  return chartDataCache;
+})
