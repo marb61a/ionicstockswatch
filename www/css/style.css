@@ -37,6 +37,25 @@
   -webkit-box-shadow: inset 0px 0px 15px rgba(0, 0, 0, .15);
 }
 
+/* Market data card  */
+
+#market-data-card {
+  font-size: 3.25vmin;
+}
+
+#market-data-card .col-20 {
+  font-weight: bolder;
+}
+
+#market-data-card .col-20:last-of-type {
+  text-align: right;
+}
+
+#market-data-card .last-trade {
+  font-size: 3vmin;
+  float: right;
+}
+
 
 /* Short button bar  */
 

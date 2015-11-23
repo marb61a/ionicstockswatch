@@ -87,3 +87,16 @@ angular.module('stockMarketApp.services', [])
   
   return chartDataCache;
 })
+
+.factory('chartDataService', function($q, $http, encodeURIService, chartDataCacheService){
+  var getHistoricalData = function(ticker, fromDate, todayDate){
+    var deferred = $q.defer(),
+        cacheKey = ticker,
+        chartDataCache = chartDataCacheService.get(cacheKey),
+        query = 'select * from yahoo.finance.historicaldata where symbol = "' +
+                ticker + '" and startDate = "' + fromDate + '" and endDate = "' + todayDate + '"',
+        url = 'http://query.yahooapis.com/v1/public/yql?q=' +
+                encodeURIService.encode(query) +
+                '&format=json&env=http://datatables.org/alltables.env';
+  }
+})
