@@ -25,6 +25,37 @@
         </div>
     </div>
     
+    <div class="card" id="market-data-card">
+      <div class="item item-divider">Market Data <span class="last-trade">Last trade: </span></div>
+      <div class="row row-center">
+        <div class="col">Ask:</div>
+        <div class="col col-20"></div>
+        <div class="col">Bid:</div>
+        <div class="col col-20"></div>
+      </div>
+
+      <div class="row row-center">
+        <div class="col">Prev. Close:</div>
+        <div class="col col-20"></div>
+        <div class="col">Open:</div>
+        <div class="col col-20">}</div>
+      </div>
+
+      <div class="row row-center">
+        <div class="col">Day's High:</div>
+        <div class="col col-20"></div>
+        <div class="col">Day's Low:</div>
+        <div class="col col-20"></div>
+      </div>
+
+      <div class="row row-center">
+        <div class="col">52w High:</div>
+        <div class="col col-20"></div>
+        <div class="col">52w Low:</div>
+        <div class="col col-20"></div>
+      </div>
+    </div>
+    
     <ion-content class="has-subheader" scrollbar-y="false">
         <div class="button-bar" id="short-button-bar">
             <a ng-click="chartViewFunc(1)" ng-class="chartView == 1 ? 'active' : ''" class="button">Day</a>
