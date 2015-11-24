@@ -111,5 +111,26 @@ angular.module('stockMarketApp.controllers', [])
               });
             };
 
+          function getPriceData() {
+            var promise = stockDataServce.getPriceData($scope.ticker);
+      
+            promise.then(function(data){
+              console.log(data);
+              $scope.stockPriceData = data;
+      
+              if (data.chg_percent >= 0 && data !== null) {
+                $scope.reactiveColor = {
+                  'background-color': '#33cd5f',
+                  'border-color': 'rgba(255,255,255,.3)'
+                };
+              } else if (data.chg_percent < 0 && data === null) {
+                $scope.reactiveColor = {
+                  'background-color': '#ef473a',
+                  'border-color': 'rgba(0,0,0,.2)'
+                };
+            }
+          });
+        }
+        
 
       }])
