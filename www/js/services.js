@@ -88,6 +88,22 @@ angular.module('stockMarketApp.services', [])
   return chartDataCache;
 })
 
+.factory('notesCacheService', function(CacheFactory){
+  var notesCache;
+  
+  if(!CacheFactory.get('notesCache')){
+    notesCache = CacheFactory('notesCache', {
+      maxAge: 60 * 60 * 8 * 1000,
+      deleteOnExpire: 'aggressive',
+      storageMode: 'localStorage'
+    });
+  } else{
+    notesCache = CacheFactory.get('notesCache');
+  }
+  
+  return notesCache;
+})
+
 .factory('chartDataService', function($q, $http, encodeURIService, chartDataCacheService){
   var getHistoricalData = function(ticker, fromDate, todayDate){
     var deferred = $q.defer(),
@@ -98,5 +114,30 @@ angular.module('stockMarketApp.services', [])
         url = 'http://query.yahooapis.com/v1/public/yql?q=' +
                 encodeURIService.encode(query) +
                 '&format=json&env=http://datatables.org/alltables.env';
+    
+    if(chartDataCache){
+      deferred.resolve(chartDataCache);
+    } else{
+      $http.get(url)
+        .success(function(){
+          var jsonData = json.query.results.quote;
+          var priceData = [],
+              volumeData = [];
+              
+          jsonData.forEach(function(){
+            var dateToMills = dayDataObject.Date,
+                date = Date.parse(dateToMills),
+                price = parseFloat(Math.round(dayDataObject.Close * 100) / 100).toFixed(3),
+                volume = dayDataObject.Volume,
+                volumeDatum = '[' + date + ',' + volume + ']',
+                priceDatum = '[' + date + ',' + price + ']';
+
+            console.log(volumeDatum, priceDatum);
+
+            volumeData.unshift(volumeDatum);
+            priceData.unshift(priceDatum);
+          });    
+        })
+    }           
   }
 })
