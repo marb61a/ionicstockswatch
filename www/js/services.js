@@ -136,8 +136,32 @@ angular.module('stockMarketApp.services', [])
 
             volumeData.unshift(volumeDatum);
             priceData.unshift(priceDatum);
-          });    
+          }); 
+          
+        var formattedChartData = 
+          '[{' +
+              '"key":' + '"volume",' +
+              '"bar":' + 'true,' +
+              '"values":' + '[' + volumeData + ']' +
+          '},' +
+          '{' +
+              '"key":' + '"' + ticker + '",' +
+              '"values":' + '[' + priceData + ']' +
+          '}]';
+          
+          deferred.resolve(formattedChartData);
+          chartDataCacheService.put(cacheKey, formattedChartData);
         })
-    }           
-  }
+        .error(function(error){
+          console.log("Chart data error: " + error);
+          deferred.reject();
+        });
+    }
+    
+    return deferred.promise;
+  };
+  
+  return{
+   getHistoricalData: getHistoricalData 
+  };
 })
