@@ -165,3 +165,33 @@ angular.module('stockMarketApp.services', [])
    getHistoricalData: getHistoricalData 
   };
 })
+
+.factory('notesService', function(notesCacheService){
+  return{
+    function(){
+      return notesCacheService.get(ticker);
+    },
+    
+    addNote : function(ticker, note){
+      var stockNotes = [];
+      
+      if (notesCacheService.get(ticker)) {
+        stockNotes = notesCacheService.get(ticker);
+        stockNotes.push(note);
+      } else {
+        stockNotes.push(note);
+      }
+      
+      notesCacheService.put(ticker, stockNotes);
+    },
+    
+    deleteNote : function(){
+      var stockNotes = [];
+
+      stockNotes = notesCacheService.get(ticker);
+      stockNotes.splice(index, 1);
+      notesCacheService.put(ticker, stockNotes);
+    }
+  };
+  
+})
