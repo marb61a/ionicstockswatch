@@ -132,5 +132,28 @@ angular.module('stockMarketApp.controllers', [])
           });
         }
         
+        function getDetailsData() {
+          var promise = stockDataServce.getDetailsData($scope.ticker);
+    
+          promise.then(function(data){
+            console.log(data);
+            $scope.stockDetailsData = data;
+          });
+        }
+        
+        function getChartData(){
+          var promise = chartDataService.getHistoricalData($scope.ticker, $scope.oneYearAgoDate, $scope.todayDate);
+          
+          promise.then(function(data) {
+
+            $scope.myData = JSON.parse(data)
+                          	.map(function(series) {
+                          		series.values = series.values.map(function(d) { return {x: d[0], y: d[1] }; });
+                          		return series;
+                          	});
+          });
+          }
+         
+         var marginBottom = ($window.innerWidth / 100) * 10;
 
       }])
