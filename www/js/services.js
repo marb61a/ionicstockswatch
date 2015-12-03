@@ -51,6 +51,7 @@ angular.module('stockMarketApp.services', [])
   
 })
 
+
 .factory('dateService', function($filter){
 
   var currentDate = function() {
@@ -72,6 +73,7 @@ angular.module('stockMarketApp.services', [])
 
 })
 
+
 .factory('chartDataCacheService', function(CacheFactory){
   var chartDataCache;
   
@@ -88,6 +90,7 @@ angular.module('stockMarketApp.services', [])
   return chartDataCache;
 })
 
+
 .factory('notesCacheService', function(CacheFactory){
   var notesCache;
   
@@ -103,6 +106,41 @@ angular.module('stockMarketApp.services', [])
   
   return notesCache;
 })
+
+
+.factory('fillMyStocksCacheService', function(CacheFactory){
+  var myStocksCache;
+  
+  if(!CacheFactory.get('myStocksCache')){
+    myStocksCache = CacheFactory('myStocksCache',{
+      maxAge: 60 * 60 * 8 * 1000,
+      deleteOnExpire: 'aggressive',
+      storageMode: 'localStorage'
+    });
+  } else{
+    myStocksCache = CacheFactory.get('myStocksCache');
+  }
+  
+  var fillMyStocksCache = function(){
+    var myStockArray =  [
+      {ticker : "AAPL"},
+      {ticker : "GE"},
+      {ticker : "FB"},
+      {ticker : "NOW"},
+      {ticker : "BAC"},
+      {ticker : "C"},
+      {ticker : "NFLX"},
+      {ticker : "BRK-A"}
+    ];
+
+    myStocksCache.put("myStocks", myStockArray);
+  };
+  
+  return {
+    fillMyStocksCache: fillMyStocksCache
+  };
+})
+
 
 .factory('followStockService', function(myStocksArrayService, myStocksCacheService){
   return{
