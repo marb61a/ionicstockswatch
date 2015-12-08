@@ -29,6 +29,9 @@
                         <h6><span ng-if="stock.change >= 0">+</span>{{stock.change | shrinkNumber:2}}</h6>
                     </div>
                 </div>
+                <ion-option-button class="button-light icon ion-minus-circled color-red inset-shadow" ng-click="unfollowStock(stock.symbol)">
+                    
+                </ion-option-button>
             </ion-item>
         </ion-list>
     </ion-content>

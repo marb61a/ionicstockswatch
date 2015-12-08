@@ -9,8 +9,7 @@
                 placeholder="Search stocks..."
                 ng-model="searchQuery"
                 ng-change="search()"
-                ng-class="searchQuery.length <= 4 && searchQuery.length > 0 ? 'text-uppercase' : 'text-capitalize'"
-            >
+                ng-class="searchQuery.length <= 4 && searchQuery.length > 0 ? 'text-uppercase' : 'text-capitalize'">
             <i class="icon ion-close-round" ng-click="closeModal()"></i>
         </div>
     </div>

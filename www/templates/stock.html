@@ -35,6 +35,13 @@
             <a ng-click="chartViewFunc(4)" ng-class="chartView == 4 ? 'active' : ''" class="button">Year</a>
             <a ng-click="chartViewFunc(5)" ng-class="chartView == 5 ? 'active' : ''" class="button">Max</a>
         </div>
+        
+        <!-- Yahoo Charts — go here for options https://code.google.com/p/support/wiki/ReadOnlyTransition -->
+        <img ng-if="chartView == 1" ng-src="http://chart.finance.yahoo.com/z?s={{ticker}}&t=1d&q=l&l=on&z=m&a=vm" style="width: 100%;">
+        <img ng-if="chartView == 2" ng-src="http://chart.finance.yahoo.com/z?s={{ticker}}&t=5d&q=l&l=on&z=m&a=vm" style="width: 100%;">
+        <img ng-if="chartView == 3" ng-src="http://chart.finance.yahoo.com/z?s={{ticker}}&t=3m&q=l&l=on&z=m&a=vm" style="width: 100%;">
+        <div ng-if="chartView == 4" nv-chart="chartOptions" id="interactiveChart"></div>
+        <img ng-if="chartView == 5" ng-src="http://chart.finance.yahoo.com/z?s={{ticker}}&t=my&q=l&l=on&z=m&a=vm" style="width: 100%;">
     
         <div class="card" id="market-data-card">
           <div class="item item-divider">Market Data <span class="last-trade">Last trade: </span></div>
