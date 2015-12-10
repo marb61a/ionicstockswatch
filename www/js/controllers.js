@@ -184,6 +184,17 @@ angular.module('stockMarketApp.controllers', [])
                           	});
           });
           }
+          
+          function getNews() {
+
+          $scope.newsStories = [];
+    
+          var promise = newsService.getNews($scope.ticker);
+    
+          promise.then(function(data) {
+            $scope.newsStories = data;
+          });
+        }
          
          var marginBottom = ($window.innerWidth / 100) * 10;
 
@@ -212,4 +223,20 @@ angular.module('stockMarketApp.controllers', [])
     $state.go('app.stock', {stockTicker: ticker});
   };
   
-}])      
+}]) 
+
+.controller('LoginSignupCtrl', ['$scope', 'modalService', 'userService', function($scope, modalService, userService){
+  $scope.user = {email: '', password: ''};
+
+    $scope.closeModal = function() {
+      modalService.closeModal();
+    };
+
+    $scope.signup = function(user) {
+      userService.signup(user);
+    };
+
+    $scope.login = function(user) {
+      userService.login(user);
+    };
+}]);
