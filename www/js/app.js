@@ -1,6 +1,8 @@
 angular.module('stockMarketApp', [
   'ionic',
+  'firebase',
   'angular-cache',
+  'ngCordova',
   'nvd3',
   'nvChart',
   'cb.x2js',

@@ -1,9 +1,15 @@
 angular.module('stockMarketApp.controllers', [])
 
-.controller('AppCtrl',['$scope', '$modalService', 
-      function($scope, $modalService){
-        $scope.modalService = modalService;
-      }])
+.controller('AppCtrl', ['$scope', 'modalService', 'userService',
+  function($scope, modalService, userService) {
+
+    $scope.modalService = modalService;
+
+    $scope.logout = function() {
+      userService.logout();
+    };
+
+}])
       
 .controller('MyStocksCtrl', ['$scope', 'myStocksArrayService', 'stockDataService', 'stockPriceCacheService', 'followStockService',
   function($scope, myStocksArrayService, stockDataService, stockPriceCacheService, followStockService) {
