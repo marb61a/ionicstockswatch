@@ -295,3 +295,28 @@ angular.module('stockMarketApp.services', [])
     }
   };
 })
+
+.factory('searchService', function($q, $http){
+  return{
+    search : function(query){
+      var deferred = $q.defer();
+      
+      url = 'http://d.yimg.com/autoc.finance.yahoo.com/autoc?query="' + query + '"&callback=YAHOO.Finance.SymbolSuggest.ssCallback';
+      
+      YAHOO = window.YAHOO = {
+        Finance: {
+          SymbolSuggest: {}
+        }
+      };
+      
+      YAHOO.Finance.SymbolSuggest.ssCallback = function(data) {
+        var jsonData = data.ResultSet.Result;
+        deferred.resolve(jsonData);
+      };
+      
+      $http.jsonp(url).then(YAHOO.Finance.SymbolSuggest.ssCallback);
+
+      return deferred.promise;
+    }
+  };
+})
