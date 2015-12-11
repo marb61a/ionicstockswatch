@@ -141,6 +141,24 @@ angular.module('stockMarketApp.services', [])
   };
 })
 
+.factory('myStocksCacheService', function(CacheFactory) {
+
+  var myStocksCache = CacheFactory.get('myStocksCache');
+
+  return myStocksCache;
+})
+
+.factory('myStocksArrayService', function(fillMyStocksCacheService, myStocksCacheService){
+  if(!myStocksCacheService.info('myStocks')) {
+    fillMyStocksCacheService.fillMyStocksCache();
+  }
+
+  var myStocks = myStocksCacheService.get('myStocks');
+
+  return myStocks;
+  
+})
+
 
 .factory('followStockService', function(myStocksArrayService, myStocksCacheService){
   return{
