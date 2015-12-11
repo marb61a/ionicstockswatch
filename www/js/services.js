@@ -90,6 +90,39 @@ angular.module('stockMarketApp.services', [])
   return chartDataCache;
 })
 
+.factory('stockDetailsCacheService', function(CacheFactory) {
+
+  var stockDetailsCache;
+
+  if(!CacheFactory.get('stockDetailsCache')) {
+    stockDetailsCache = CacheFactory('stockDetailsCache', {
+      maxAge: 60 * 1000,
+      deleteOnExpire: 'aggressive',
+      storageMode: 'localStorage'
+    });
+  }
+  else {
+    stockDetailsCache = CacheFactory.get('stockDetailsCache');
+  }
+
+  return stockDetailsCache;
+})
+
+.factory('stockPriceCacheService', function(CacheFactory){
+  var stockPriceCache;
+  
+  if(!CacheFactory.get('stockPriceCache')){
+    stockPriceCache = CacheFactory('stockPriceCache', {
+      maxAge: 5 * 1000,
+      deleteOnExpire: 'aggressive',
+      storageMode: 'localStorage'
+    });
+  }else{
+    stockPriceCache = CacheFactory.get('stockPriceCache');
+  }
+  
+  return stockPriceCache;
+})
 
 .factory('notesCacheService', function(CacheFactory){
   var notesCache;
