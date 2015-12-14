@@ -86,11 +86,48 @@ angular.module('stockMarketApp.services', [])
 })
 
 
-
 .factory('firebaseUserRef', function(firebaseRef) {
   var userRef = firebaseRef.child('users');
 
   return userRef;
+})
+
+.factory('userService', function($rootScope, $window, $timeout, firebaseRef, firebaseUserRef,
+                                 myStocksArrayService, myStocksCacheService, notesCacheService, modalService ){
+                                   
+  var login = function(user, signup){
+    
+  };
+  
+  var signup = function(){
+    firebaseRef.createUser({
+      email    : user.email,
+      password : user.password
+    }, function(error, userData){
+        if(error){
+          console.log('Error creating user', error);
+        }else{
+          login(user, true);
+          firebaseRef.child('emails').push(user.email);
+          firebaseUserRef.child(userData.uid).child('stocks').set(myStocksArrayService);
+  
+          var stocksWithNotes = notesCacheService.keys();
+          
+          stocksWithNotes.forEach(function(stockWithNotes) {
+          var notes = notesCacheService.get(stockWithNotes);
+
+          notes.forEach(function(note) {
+            firebaseUserRef.child(userData.uid).child('notes').child(note.ticker).push(note);
+          });
+        });
+        }
+    });
+  };
+  
+  var logout = function(){
+    
+  };
+  
 })
 
 
