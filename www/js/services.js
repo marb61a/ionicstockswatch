@@ -1,16 +1,6 @@
 angular.module('stockMarketApp.services', [])
 
-.factory('encodeURIService', function(){
-  return{
-    encode : function(string) {
-      console.log(string);
-      return encodeURIComponent(string)
-      .replace(/\"/g, "%22")
-      .replace(/\ /g, "%20")
-      .replace(/[!'()]/g, escape);
-    }
-  };
-})
+.constant('FIREBASE_URL', 'https://https://stockwatcherapp.firebaseio.com/')
 
 .service('modalService', function($ionicModal){
   this.openModal = function(){
@@ -25,17 +15,21 @@ angular.module('stockMarketApp.services', [])
         _this.modal = modal;
         _this.modal.show();
       });
-    } else if (id == 2) {
+    } else if(id == 2) {
       $ionicModal.fromTemplateUrl('templates/login.html', {
-        scope: $scope
+        scope: null,
+        controller: 'LoginSearchCtrl'
       }).then(function(modal) {
-        $scope.modal = modal;
+        _this.modal = modal;
+        _this.modal.show();
       });
-    } else if (id == 3) {
-      $ionicModal.fromTemplateUrl('templates/login.html', {
-        scope: $scope
+    } else if(id == 3) {
+      $ionicModal.fromTemplateUrl('templates/signup.html', {
+        scope: null,
+        controller: 'LoginSearchCtrl'
       }).then(function(modal) {
-        $scope.modal = modal;
+        _this.modal = modal;
+        _this.modal.show();
       });
     }
   };
@@ -49,6 +43,18 @@ angular.module('stockMarketApp.services', [])
     _this.modal.remove();
   };
   
+})
+
+.factory('encodeURIService', function(){
+  return{
+    encode : function(string) {
+      console.log(string);
+      return encodeURIComponent(string)
+      .replace(/\"/g, "%22")
+      .replace(/\ /g, "%20")
+      .replace(/[!'()]/g, escape);
+    }
+  };
 })
 
 
@@ -71,6 +77,20 @@ angular.module('stockMarketApp.services', [])
     oneYearAgoDate: oneYearAgoDate
   };
 
+})
+
+.factory('firebaseRef', function($firebase, FIREBASE_URL) {
+  var firebaseRef = new Firebase(FIREBASE_URL);
+
+  return firebaseRef;
+})
+
+
+
+.factory('firebaseUserRef', function(firebaseRef) {
+  var userRef = firebaseRef.child('users');
+
+  return userRef;
 })
 
 
