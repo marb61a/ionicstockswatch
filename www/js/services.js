@@ -150,7 +150,39 @@ angular.module('stockMarketApp.services', [])
   };
   
   var logout = function(){
-    
+    firebaseRef.unauth();
+    notesCacheService.removeAll();
+    myStocksCacheService.removeAll();
+    $window.location.reload(true);
+    $rootScope.currentUser = '';
+  };
+  
+  var updateStocks = function(stocks) {
+    firebaseUserRef.child(getUser().uid).child('stocks').set(stocks);
+  };
+
+  var updateNotes = function(ticker, notes) {
+    firebaseUserRef.child(getUser().uid).child('notes').child(ticker).remove();
+    notes.forEach(function(note) {
+      firebaseUserRef.child(getUser().uid).child('notes').child(note.ticker).push(note);
+    });
+  };
+
+  var getUser = function() {
+    return firebaseRef.getAuth();
+  };
+
+  if(getUser()) {
+    $rootScope.currentUser = getUser();
+  }
+
+  return {
+    login: login,
+    signup: signup,
+    logout: logout,
+    updateStocks: updateStocks,
+    updateNotes: updateNotes,
+    getUser: getUser
   };
   
 })
