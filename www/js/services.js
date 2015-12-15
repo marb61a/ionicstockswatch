@@ -167,6 +167,37 @@ angular.module('stockMarketApp.services', [])
       firebaseUserRef.child(getUser().uid).child('notes').child(note.ticker).push(note);
     });
   };
+  
+  var loadUserData = function(authData){
+    firebaseUserRef.child(authData.uid).child('stocks').once('value', function(snapshot) {
+      var stocksFromDatabase = [];
+
+      snapshot.val().forEach(function(stock) {
+        var stockToAdd = {ticker: stock.ticker};
+        stocksFromDatabase.push(stockToAdd);
+      });
+
+      myStocksCacheService.put('myStocks', stocksFromDatabase);
+    },
+    function(error) {
+      console.log("Firebase error –> stocks" + error);
+    });
+
+    firebaseUserRef.child(authData.uid).child('notes').once('value', function(snapshot) {
+
+      snapshot.forEach(function(stocksWithNotes) {
+        var notesFromDatabase = [];
+        stocksWithNotes.forEach(function(note) {
+          notesFromDatabase.push(note.val());
+          var cacheKey = note.child('ticker').val();
+          notesCacheService.put(cacheKey, notesFromDatabase);
+        });
+      });
+    },
+    function(error) {
+      console.log("Firebase error –> notes: " + error);
+    });
+  };
 
   var getUser = function() {
     return firebaseRef.getAuth();
