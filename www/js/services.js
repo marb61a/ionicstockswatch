@@ -95,8 +95,33 @@ angular.module('stockMarketApp.services', [])
 .factory('userService', function($rootScope, $window, $timeout, firebaseRef, firebaseUserRef,
                                  myStocksArrayService, myStocksCacheService, notesCacheService, modalService ){
                                    
-  var login = function(user, signup){
-    
+  var login = function(user, signup) {
+
+    firebaseRef.authWithPassword({
+      email    : user.email,
+      password : user.password
+    }, function(error, authData) {
+      if (error) {
+        console.log("Login Failed!", error);
+      } else {
+        $rootScope.currentUser = authData;
+
+        if(signup) {
+          modalService.closeModal();
+        }
+        else {
+          myStocksCacheService.removeAll();
+          notesCacheService.removeAll();
+
+          loadUserData(authData);
+
+          modalService.closeModal();
+          $timeout(function() {
+            $window.location.reload(true);
+          }, 400);
+        }
+      }
+    });
   };
   
   var signup = function(){
