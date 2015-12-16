@@ -40,9 +40,10 @@ angular.module('stockMarketApp.controllers', [])
     };
 }])
       
-.contoller('StockCtrl', ['$scope', '$stateParams', '$window', '$ionicPopup', 'followStockService', 'stockDataServce', 'dateService', 'chartDataService', 'notesService', 'newsService',
-      function($scope, $stateParams, $window, $ionicPopup, followStockService, stockDataServce, dateService, chartDataService, notesService, newsService){
+.contoller('StockCtrl', ['$scope', '$stateParams', '$window', '$ionicPopup','$cordovaInAppBrowser', 'followStockService', 'stockDataServce', 'dateService', 'chartDataService', 'notesService', 'newsService',
+      function($scope, $stateParams, $window, $ionicPopup, followStockService, $cordovaInAppBrowser, stockDataServce, dateService, chartDataService, notesService, newsService){
             $scope.ticker = $stateParams.stockTicker;
+            // This is the default chart setting
             $scope.chartView = 4;
             $scope.oneYearAgoDate = dateService.oneYearAgoDate();
             $scope.todayDate = dateService.currentDate();
@@ -72,7 +73,13 @@ angular.module('stockMarketApp.controllers', [])
             };
             
             $scope.openWindow = function(link) {
-                
+              var inAppBrowserOptions = {
+                location: 'yes',
+                clearcache: 'yes',
+                toolbar: 'yes'
+              };
+        
+              $cordovaInAppBrowser.open(link, '_blank', inAppBrowserOptions);
             };
             
             $scope.addNote = function() {
