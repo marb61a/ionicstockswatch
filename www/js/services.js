@@ -124,7 +124,7 @@ angular.module('stockMarketApp.services', [])
     });
   };
   
-  var signup = function(){
+  var signup = function(user){
     firebaseRef.createUser({
       email    : user.email,
       password : user.password
