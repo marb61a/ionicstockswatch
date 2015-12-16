@@ -373,7 +373,7 @@ angular.module('stockMarketApp.services', [])
 
 .factory('stockDataService', function($q, $http, encodeURIService, stockDetailsCacheService, stockPriceCacheService){
   var getDetailsData = function(ticker){
-     var deferred = $q.defer(),
+    var deferred = $q.defer(),
 
     cacheKey = ticker,
     stockDetailsCache = stockDetailsCacheService.get(cacheKey),
@@ -398,6 +398,31 @@ angular.module('stockMarketApp.services', [])
     }
 
     return deferred.promise;
+  };
+  
+  var getPriceData = function(){
+    var deferred = $q.defer(),
+    cacheKey = ticker;
+    
+    url = "http://finance.yahoo.com/webservice/v1/symbols/" + ticker + "/quote?format=json&view=detail";
+
+    $http.get(url)
+      .success(function(json) {
+        var jsonData = json.list.resources[0].resource.fields;
+        stockPriceCacheService.put(cacheKey, jsonData);
+        deferred.resolve(jsonData);
+      })
+      .error(function(error) {
+        console.log("Price data error: " + error);
+        deferred.reject();
+      });
+    
+    return deferred.promise;
+  };
+  
+  return{
+    getPriceData : getPriceData,
+    getDetailsData : getDetailsData
   };
   
 })
