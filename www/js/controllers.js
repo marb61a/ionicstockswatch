@@ -205,7 +205,7 @@ angular.module('stockMarketApp.controllers', [])
             return d3.time.format("%b %d")(new Date(dx));
           }
           
-          return null
+          return null;
         };
         
         // bottom chart x axis
@@ -231,7 +231,26 @@ angular.module('stockMarketApp.controllers', [])
          
          var marginBottom = ($window.innerWidth / 100) * 10;
          
-
+        $scope.chartOptions = {
+          chartType: 'linePlusBarWithFocusChart',
+          data: 'myData',
+          margin: {top: 15, right: 0, bottom: marginBottom, left: 0},
+          interpolate: "cardinal",
+          useInteractiveGuideline: false,
+          yShowMaxMin: false,
+          tooltips: false,
+          showLegend: false,
+          useVoronoi: false,
+          xShowMaxMin: false,
+          xValue: xValueFunction,
+          xAxisTickFormat: xTickFormat,
+          x2AxisTickFormat: x2TickFormat,
+          y1AxisTickFormat: y1TickFormat,
+          y2AxisTickFormat: y2TickFormat,
+          y3AxisTickFormat: y3TickFormat,
+          y4AxisTickFormat: y4TickFormat,
+          transitionDuration: 500
+        };
       }])
       
       
