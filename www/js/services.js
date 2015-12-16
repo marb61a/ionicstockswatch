@@ -371,6 +371,37 @@ angular.module('stockMarketApp.services', [])
   };
 })
 
+.factory('stockDataService', function($q, $http, encodeURIService, stockDetailsCacheService, stockPriceCacheService){
+  var getDetailsData = function(ticker){
+     var deferred = $q.defer(),
+
+    cacheKey = ticker,
+    stockDetailsCache = stockDetailsCacheService.get(cacheKey),
+
+    query = 'select * from yahoo.finance.quotes where symbol IN ("' + ticker + '")',
+    url = 'http://query.yahooapis.com/v1/public/yql?q=' + encodeURIService.encode(query) + '&format=json&env=http://datatables.org/alltables.env';
+
+    if(stockDetailsCache) {
+      deferred.resolve(stockDetailsCache);
+    }
+    else {
+      $http.get(url)
+        .success(function(json) {
+          var jsonData = json.query.results.quote;
+          deferred.resolve(jsonData);
+          stockDetailsCacheService.put(cacheKey, jsonData);
+        })
+        .error(function(error) {
+          console.log("Details data error: " + error);
+          deferred.reject();
+        });
+    }
+
+    return deferred.promise;
+  };
+  
+})
+
 .factory('chartDataService', function($q, $http, encodeURIService, chartDataCacheService){
   var getHistoricalData = function(ticker, fromDate, todayDate){
     var deferred = $q.defer(),
@@ -435,7 +466,7 @@ angular.module('stockMarketApp.services', [])
 
 .factory('notesService', function(notesCacheService){
   return{
-    function(){
+    getNotes : function(ticker){
       return notesCacheService.get(ticker);
     },
     
