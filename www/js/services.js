@@ -3,7 +3,7 @@ angular.module('stockMarketApp.services', [])
 .constant('FIREBASE_URL', 'https://stockwatcherapp.firebaseio.com/')
 
 .service('modalService', function($ionicModal){
-  this.openModal = function(){
+  this.openModal = function(id){
     var _this = this;
 
     if (id == 1) {
