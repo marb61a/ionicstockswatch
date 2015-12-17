@@ -128,24 +128,24 @@ angular.module('stockMarketApp.services', [])
     firebaseRef.createUser({
       email    : user.email,
       password : user.password
-    }, function(error, userData){
-        if(error){
-          console.log('Error creating user', error);
-        }else{
-          login(user, true);
-          firebaseRef.child('emails').push(user.email);
-          firebaseUserRef.child(userData.uid).child('stocks').set(myStocksArrayService);
-  
-          var stocksWithNotes = notesCacheService.keys();
-          
-          stocksWithNotes.forEach(function(stockWithNotes) {
+    }, function(error, userData) {
+      if (error) {
+        console.log("Error creating user:", error);
+      } else {
+        login(user, true);
+        firebaseRef.child('emails').push(user.email);
+        firebaseUserRef.child(userData.uid).child('stocks').set(myStocksArrayService);
+
+        var stocksWithNotes = notesCacheService.keys();
+
+        stocksWithNotes.forEach(function(stockWithNotes) {
           var notes = notesCacheService.get(stockWithNotes);
 
           notes.forEach(function(note) {
             firebaseUserRef.child(userData.uid).child('notes').child(note.ticker).push(note);
           });
         });
-        }
+      }
     });
   };
   
