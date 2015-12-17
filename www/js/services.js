@@ -1,6 +1,6 @@
 angular.module('stockMarketApp.services', [])
 
-.constant('FIREBASE_URL', 'https://https://stockwatcherapp.firebaseio.com/')
+.constant('FIREBASE_URL', 'https://stockwatcherapp.firebaseio.com/')
 
 .service('modalService', function($ionicModal){
   this.openModal = function(){
@@ -400,10 +400,10 @@ angular.module('stockMarketApp.services', [])
     return deferred.promise;
   };
   
-  var getPriceData = function(){
+  var getPriceData = function(ticker) {
+
     var deferred = $q.defer(),
-    cacheKey = ticker;
-    
+    cacheKey = ticker,
     url = "http://finance.yahoo.com/webservice/v1/symbols/" + ticker + "/quote?format=json&view=detail";
 
     $http.get(url)
@@ -416,7 +416,7 @@ angular.module('stockMarketApp.services', [])
         console.log("Price data error: " + error);
         deferred.reject();
       });
-    
+
     return deferred.promise;
   };
   

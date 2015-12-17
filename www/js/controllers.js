@@ -39,6 +39,7 @@ angular.module('stockMarketApp.controllers', [])
       $scope.getMyStocksData();
     };
 }])
+
       
 .controller('StockCtrl', ['$scope', '$stateParams', '$window', '$ionicPopup','$cordovaInAppBrowser', 'followStockService', 'stockDataServce', 'dateService', 'chartDataService', 'notesService', 'newsService',
       function($scope, $stateParams, $window, $ionicPopup, followStockService, $cordovaInAppBrowser, stockDataServce, dateService, chartDataService, notesService, newsService){
