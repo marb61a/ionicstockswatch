@@ -40,7 +40,7 @@ angular.module('stockMarketApp.controllers', [])
     };
 }])
       
-.contoller('StockCtrl', ['$scope', '$stateParams', '$window', '$ionicPopup','$cordovaInAppBrowser', 'followStockService', 'stockDataServce', 'dateService', 'chartDataService', 'notesService', 'newsService',
+.controller('StockCtrl', ['$scope', '$stateParams', '$window', '$ionicPopup','$cordovaInAppBrowser', 'followStockService', 'stockDataServce', 'dateService', 'chartDataService', 'notesService', 'newsService',
       function($scope, $stateParams, $window, $ionicPopup, followStockService, $cordovaInAppBrowser, stockDataServce, dateService, chartDataService, notesService, newsService){
             $scope.ticker = $stateParams.stockTicker;
             // This is the default chart setting
